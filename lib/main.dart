@@ -8,12 +8,14 @@ void main() {
 }
 
 class RickAndMortyApp extends StatelessWidget {
-  const RickAndMortyApp({Key? key}) : super(key: key);
+  const RickAndMortyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => PersonajesService())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => PersonajesService()),
+      ],
       child: MaterialApp(
         title: 'Rick and Morty Dex',
         debugShowCheckedModeBanner: false,
