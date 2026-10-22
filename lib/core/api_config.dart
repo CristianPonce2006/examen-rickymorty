@@ -1,5 +1,4 @@
 class ApiConfig {
-    ApiConfig();
-    
-    static const String baseUrl = "https://rickandmortyapi.com/api/character";
+  static const String baseUrl = 'https://rickandmortyapi.com/api';
+  static String charactersByIds(List<String> ids) => '$baseUrl/character/${ids.join(',')}';
 }
