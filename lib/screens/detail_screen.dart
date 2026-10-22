@@ -6,7 +6,7 @@ import '../services/personaje_service.dart';
 class DetailScreen extends StatelessWidget {
   final Personaje personaje;
 
-  const DetailScreen({Key? key, required this.personaje}) : super(key: key);
+  const DetailScreen({super.key, required this.personaje});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +14,11 @@ class DetailScreen extends StatelessWidget {
     const accentColor = Color(0xFF97CE4C);
 
     Color statusColor = Colors.grey;
-    if (personaje.status.toLowerCase() == 'alive') statusColor = accentColor;
-    if (personaje.status.toLowerCase() == 'dead')
+    if (personaje.status.toLowerCase() == 'alive') {
+      statusColor = accentColor;
+    } else if (personaje.status.toLowerCase() == 'dead') {
       statusColor = Colors.redAccent;
+    }
 
     return Scaffold(
       backgroundColor: primaryColor,
@@ -40,7 +42,7 @@ class DetailScreen extends StatelessWidget {
                     width: 200,
                     height: 200,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => const Icon(
+                    errorBuilder: (context, error, stackTrace) => const Icon(
                       Icons.person,
                       size: 100,
                       color: Colors.white,
@@ -145,7 +147,7 @@ class DetailScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.1),
+              color: iconColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, color: iconColor),
