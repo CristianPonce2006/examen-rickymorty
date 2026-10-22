@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../core/api_config.dart';
@@ -26,7 +28,7 @@ class PersonajeService {
         tieneSiguiente: info['next'] != null,
       );
     } else {
-      throw Exception('Error al cargar personajes: HTTP ${response.statusCode}');
+      throw Exception('HTTP ${response.statusCode}');
     }
   }
 
@@ -84,7 +86,7 @@ class PersonajeService {
         tieneSiguiente: tieneSiguiente,
       );
     } else {
-      throw Exception('Error al cargar favoritos: HTTP ${response.statusCode}');
+      throw Exception('HTTP ${response.statusCode}');
     }
   }
 }
@@ -124,7 +126,7 @@ class PersonajesService extends ChangeNotifier {
     await fetchPersonajes(page: 1);
   }
 
-  /// Carga los personajes de una página remota
+  /// Carga los personajes de una página remota sin mostrar links ni excepciones crudas al usuario
   Future<void> fetchPersonajes({int page = 1}) async {
     _isLoading = true;
     _errorMessage = '';
@@ -137,8 +139,14 @@ class PersonajesService extends ChangeNotifier {
       _hasNextPage = resultado.tieneSiguiente;
       _allPersonajes = resultado.items;
       _applyFilter();
-    } catch (e) {
-      _errorMessage = 'No se pudo conectar con la API de Rick and Morty: $e';
+    } on SocketException {
+      _errorMessage = 'No se ha podido conectar a la API.';
+    } on http.ClientException {
+      _errorMessage = 'No se ha podido conectar a la API.';
+    } on TimeoutException {
+      _errorMessage = 'El tiempo de espera se ha agotado al intentar conectar a la API.';
+    } catch (_) {
+      _errorMessage = 'No se ha podido conectar a la API de Rick and Morty.';
     } finally {
       _isLoading = false;
       notifyListeners();

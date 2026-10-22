@@ -78,29 +78,112 @@ class HomeScreen extends StatelessWidget {
                   )
                 : provider.errorMessage.isNotEmpty
                     ? Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.all(28.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.cloud_off, size: 56, color: Colors.redAccent),
-                              const SizedBox(height: 12),
-                              Text(
-                                provider.errorMessage,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(fontSize: 14),
+                              Container(
+                                padding: const EdgeInsets.all(18),
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent.withValues(alpha: 0.12),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.wifi_off_rounded,
+                                  size: 60,
+                                  color: Colors.redAccent,
+                                ),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 18),
+                              const Text(
+                                'No se ha podido conectar a la API',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold,
+                                  color: primaryColor,
+                                ),
+                              ),
+                              const SizedBox(height: 14),
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: Colors.grey.shade300),
+                                ),
+                                child: const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Posibles razones:',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('• ', style: TextStyle(fontWeight: FontWeight.bold)),
+                                        Expanded(
+                                          child: Text(
+                                            'Tu dispositivo no tiene acceso a internet o Wi-Fi.',
+                                            style: TextStyle(fontSize: 13, color: Colors.black87),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 6),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('• ', style: TextStyle(fontWeight: FontWeight.bold)),
+                                        Expanded(
+                                          child: Text(
+                                            'La señal de red es inestable o lenta.',
+                                            style: TextStyle(fontSize: 13, color: Colors.black87),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 6),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('• ', style: TextStyle(fontWeight: FontWeight.bold)),
+                                        Expanded(
+                                          child: Text(
+                                            'Los servidores públicos de Rick and Morty están temporalmente fuera de servicio.',
+                                            style: TextStyle(fontSize: 13, color: Colors.black87),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 24),
                               ElevatedButton.icon(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: accentColor,
                                   foregroundColor: Colors.black,
+                                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
-                                icon: const Icon(Icons.refresh),
+                                icon: const Icon(Icons.refresh_rounded),
                                 onPressed: () => provider.fetchPersonajes(
                                   page: provider.currentPage,
                                 ),
-                                label: const Text('Reintentar'),
+                                label: const Text(
+                                  'Reintentar',
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                ),
                               ),
                             ],
                           ),
